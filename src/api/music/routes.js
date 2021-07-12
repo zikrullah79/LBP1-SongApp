@@ -2,27 +2,27 @@ const routes = (handler)=>[
     {
         method : 'POST',
         path : '/songs',
-        handler : handler.postMusicHandler
+        handler : handler.postMusicHandler,
     },
     {
         method : 'GET',
         path : '/songs',
-        handler : handler.getMusicsHandler
+        handler : handler.getMusicsHandler,
     },
     {
         method : "GET",
         path : '/songs/{id}',
-        handler : handler.getMusicByIdHandler
+        handler : handler.getMusicByIdHandler,
     },
     {
         method : "PUT",
         path : '/songs/{id}',
-        handler : handler.putMusicByIdHandler
+        handler : handler.putMusicByIdHandler,
     },
     {
         method:"DELETE",
         path : '/songs/{id}',
-        handler : handler.deleteMusicByIdHandler
+        handler : handler.deleteMusicByIdHandler,
     }
 ]
 module.exports = routes
