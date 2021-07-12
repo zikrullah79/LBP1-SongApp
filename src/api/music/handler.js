@@ -1,4 +1,5 @@
 const ClientError = require("../../exceptions/ClientError");
+const { filterResponse } = require("../../util");
 
 class MusicHandler{
     constructor(service,validator){
@@ -12,7 +13,6 @@ class MusicHandler{
     }
 
     async postMusicHandler(request,h){
-        try {
             this._validator.validateMusicPayload(request.payload);
             const {title = 'untitled',year,performer,genre,duration} = request.payload;
             
@@ -27,25 +27,6 @@ class MusicHandler{
             });
             res.code(201);
             return res;
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : 'fail',
-                    message : error.message,
-                });
-    
-                res.code(error._statusCode);    
-                return res;
-            }
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
         
     }
     async getMusicsHandler(){
@@ -54,13 +35,12 @@ class MusicHandler{
             status : "success",
             message : "Successfully get all musics",
             data : {
-                songs : songs.map(this.filterResponse)
+                songs : songs.map(filterResponse)
             }
         }
     }
 
     async getMusicByIdHandler(request,h){
-        try {
             const {id} = request.params;
             const song = await this._service.getMusicById(id);
             return {
@@ -70,30 +50,11 @@ class MusicHandler{
                     song,
                 }
             }
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : 'fail',
-                    message : error.message,
-                })
-                res.code(error._statusCode)    
-                return res
-            }
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
         
 
     }
 
     async putMusicByIdHandler(request,h){
-        try {
             this._validator.validateMusicPayload(request.payload);
             const {id} = request.params;
             await this._service.updateMusicById(id,request.payload);
@@ -101,28 +62,9 @@ class MusicHandler{
                 status:'success',
                 message : "successfully update music"
             }
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status:'fail',
-                    message : error.message
-                });
-                res.code(error._statusCode);
-                return res;
-            }
-
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
+        
     }
     async deleteMusicByIdHandler(request,h){
-        try {
             const {id} = request.params;
 
             await this._service.deleteMusicById(id);
@@ -131,33 +73,7 @@ class MusicHandler{
                 status : 'success',
                 message : "succesfully delete music"
             }
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : "fail",
-                    message : error.message
-                });
-                res.code(error._statusCode);
-                return res;
-            }
-
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
+        
     }
-    filterResponse(song){
-        console.log(song);
-        return {
-            id:song.id,
-            title:song.title,
-            performer : song.performer
-        }
-    }   
 }
 module.exports = MusicHandler;

@@ -18,4 +18,11 @@ const mapDBToModel = ({
     updatedAt:updated_at
 })
 
-module.exports = mapDBToModel;
+const filterResponse = (song) =>{
+    return {
+        id:song.id,
+        title:song.title,
+        performer : song.performer
+    }
+}
+module.exports = {mapDBToModel,filterResponse};

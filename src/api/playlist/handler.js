@@ -13,7 +13,6 @@ class PlaylistsHandler {
     }
 
     async postPlaylistHandler(request,h){
-        try {
             this._validator.validatePlaylistPayload(request.payload);
             const {name} = request.payload;
             const {id : credentialId} = request.auth.credentials
@@ -28,29 +27,11 @@ class PlaylistsHandler {
             })
             res.code(201)
             return res ;
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : 'fail',
-                    message : error.message,
-                });
-    
-                res.code(error._statusCode);    
-                return res;
-            }
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
+        
     }
     
     async getPlaylistsHandler(request,h) {
-        try {
+        
             const {id} = request.auth.credentials;
             const playlists = await this._playlistServices.getPlaylists(id);
             return {
@@ -59,28 +40,10 @@ class PlaylistsHandler {
                 data : {playlists}
                 
             }
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : 'fail',
-                    message : error.message,
-                });
-    
-                res.code(error._statusCode);    
-                return res;
-            }
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
+        
     }
     async deletePlaylistHandler(request,h){
-        try {
+        
             const {id : credentialsId} = request.auth.credentials;
             const {playlistId} = request.params; 
 
@@ -92,25 +55,7 @@ class PlaylistsHandler {
                 status : "success",
                 message : "Success Deleting Playlist"
             }
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : 'fail',
-                    message : error.message,
-                });
-    
-                res.code(error._statusCode);    
-                return res;
-            }
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
+        
     }
 }
 

@@ -16,7 +16,7 @@ class PlaylistServices{
             values : [id,name,owner]
         }
         const res = await this._pool.query(query)
-        if (!res.rows.length) {
+        if (!res.rowCount) {
             throw new InvariantError("Gagal Menambahkan Playlist")
         }
 
@@ -25,21 +25,14 @@ class PlaylistServices{
 
     async getPlaylists(owner){
         const query = {
-            // text : `SELECT r.id,r.name,s.username FROM 
-            // (SELECT * FROM playlists pl INNER JOIN (SELECT playlist_id,user_id FROM playlistcollaboration WHERE user_id = $1) t ON pl.id = t.playlist_id) r 
-            //     INNER JOIN users s ON r.owner = s.id WHERE r.owner = $1 OR r.user_id = $1`,
-            // text : `SELECT * FROM playlists WHERE owner = $1 `,
-            // text : `SELECT playlist_id FROM playlistcollaboration WHERE user_id = $1 `,
-            // text : `SELECT * FROM playlists pl INNER JOIN (SELECT playlist_id FROM playlistcollaboration WHERE user_id = $1) p ON pl.id = p.playlist_id  `,
-            // text : `SELECT * FROM playlists pl INNER JOIN (SELECT playlist_id,user_id FROM playlistcollaboration WHERE user_id = $1) t ON pl.id = t.playlist_id`,
-           text : `SELECT p.id,p.name,u.username FROM (SELECT * FROM playlists WHERE owner = $1 
+            text : `SELECT p.id,p.name,u.username FROM (SELECT * FROM playlists WHERE owner = $1 
             OR id = (SELECT playlist_id FROM playlistcollaboration WHERE user_id = $1 )) p INNER JOIN users u 
             ON p.owner = u.id`,
             values : [owner]
         }
         
         const res = await this._pool.query(query);
-        if (!res.rows.length) {
+        if (!res.rowCount) {
             return []
         }
         

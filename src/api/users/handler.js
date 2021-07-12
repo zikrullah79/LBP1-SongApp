@@ -9,7 +9,6 @@ class UsersHandler {
     }
 
     async postUserHandler(request,h){
-        try {
             this._validator.validatePayloads(request.payload);
             const {username,password,fullname} = request.payload;
 
@@ -22,24 +21,6 @@ class UsersHandler {
             })
             res.code(201);
             return res;
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status:"fail",
-                    message : error.message
-                })
-                res.code(error._statusCode)
-                return res;
-            }
-            const res = h.response({
-                status : "error",
-                message : "Terjadi kesalahan di server"
-            });
-            res.code(500)
-            console.log(error.message);
-            
-            return res;
-        }
     }
     async getUserByIdHandler(request,h){
         try {
