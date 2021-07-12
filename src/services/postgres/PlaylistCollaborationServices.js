@@ -16,7 +16,7 @@ class PlaylistCollaborationService{
             values : [id,playlistId,userId]
         }
         const res = await this._pool.query(query);
-        if (!res.rows.length) {
+        if (!res.rowCount) {
             throw new InvariantError("gagal menambahkan collaborator")
         }
 
@@ -30,7 +30,7 @@ class PlaylistCollaborationService{
         }
 
         const res = await this._pool.query(query);
-        if (!res.rows.length) {
+        if (!res.rowCount) {
             throw new InvariantError("collaborator tidak ditemukan")
         }
         
@@ -43,7 +43,7 @@ class PlaylistCollaborationService{
         }
 
         const res = await this._pool.query(query);
-        if (!res.rows.length) {
+        if (!res.rowCount) {
             throw new AuthorizationError("anda tidak memiliki akses")
         }
     }
@@ -54,7 +54,7 @@ class PlaylistCollaborationService{
         }
 
         const res = await this._pool.query(query);
-        if ( res.rows.length > 0) {
+        if ( res.rowCount > 0) {
             throw new InvariantError("collaborator sudah ada")
         }
     }

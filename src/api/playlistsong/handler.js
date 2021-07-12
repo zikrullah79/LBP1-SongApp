@@ -13,7 +13,6 @@ class PlaylistSongsHandler{
     }
 
     async postPlaylistSongHandler(request, h){
-        try {
             const {playlistId} = request.params;
             const {id : credentialsId} = request.auth.credentials;
             await this._playlistService.verifyPlaylistAccess({playlistId : playlistId,userId:credentialsId});
@@ -28,30 +27,11 @@ class PlaylistSongsHandler{
             })
             res.code(201);
             return res;
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : 'fail',
-                    message : error.message,
-                });
-    
-                res.code(error._statusCode);    
-                return res;
-            }
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
+        
     }
 
     async getPlaylistSongsHandler(request,h){
-        try {
-            const {playlistId} = request.params;
+        const {playlistId} = request.params;
             const {id : credentialsId} = request.auth.credentials;
             await this._playlistService.verifyPlaylistAccess({playlistId : playlistId,userId:credentialsId});
 
@@ -66,29 +46,10 @@ class PlaylistSongsHandler{
             })
             res.code(200);
             return res;
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : 'fail',
-                    message : error.message,
-                });
-    
-                res.code(error._statusCode);    
-                return res;
-            }
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
+        
     }
     async deletePlaylistSongHandler(request , h){
-        try {
-            this._validator.validatePlaylistSongsPayload(request.payload);
+         this._validator.validatePlaylistSongsPayload(request.payload);
             const {songId} = request.payload;
             const {playlistId} = request.params;
             const {id : credentialsId} = request.auth.credentials;
@@ -100,25 +61,7 @@ class PlaylistSongsHandler{
                 status : "success",
                 message : "Success Deleting song from playlist"
             }
-        } catch (error) {
-            if (error instanceof ClientError) {
-                const res = h.response({
-                    status : 'fail',
-                    message : error.message,
-                });
-    
-                res.code(error._statusCode);    
-                return res;
-            }
-            const res = h.response({
-                status : 'error',
-                message : "There is error in our server",
-            });
-
-            res.code(500);
-            console.log(error);
-            return res;
-        }
+        
     }
 } 
 module.exports = PlaylistSongsHandler;

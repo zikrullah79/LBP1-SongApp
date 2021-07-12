@@ -21,7 +21,7 @@ class UsersService{
         }
 
         const res = await this._pool.query(query)
-        if (!res.rows.length) {
+        if (!res.rowCount) {
             throw new InvariantError("Gagal menambahkan user")
         }
 
@@ -35,7 +35,7 @@ class UsersService{
         }
         const res = await this._pool.query(query);
 
-        if (!res.rows.length) {
+        if (!res.rowCount) {
             throw new InvariantError("User tidak ditemukan")
         }
 
@@ -51,7 +51,7 @@ class UsersService{
         };
         const res = await this._pool.query(query);
         
-        if (res.rows.length > 0 ) {
+        if (res.rowCount > 0 ) {
             throw new InvariantError("User telah terdaftar")
         }
 
@@ -65,7 +65,7 @@ class UsersService{
         }
         const res = await this._pool.query(query)
 
-        if (!res.rows.length) {
+        if (!res.rowCount) {
             throw new AuthenticationError("user tidak valid")
         }
 
