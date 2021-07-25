@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon start ./src/server.js",
+    "start": "node ./src/server.js",
     "migrate": "node-pg-migrate"
   },
   "author": "",
@@ -27,6 +27,10 @@
     "nanoid": "^3.1.23",
     "node-pg-migrate": "^5.9.0",
     "pg": "^8.6.0",
-    "redis": "^3.1.2"
+    "redis": "^3.1.2",
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.7"
   }
 }
