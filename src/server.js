@@ -154,7 +154,10 @@ const init = async() => {
             newRes.code(response._statusCode);
             return newRes;
         }
-
+        if (response._statusCode == 500) {
+            console.log(response);    
+        }
+        
         return response.continue || response;
     })
     console.log(`server running in ${server.info.uri}`);
