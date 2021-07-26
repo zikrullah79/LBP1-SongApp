@@ -1,2 +1,1 @@
-npm run migrate up
-node ./src/server.js
+npm run migrate up;npm start;
