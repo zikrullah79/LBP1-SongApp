@@ -2,9 +2,10 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY ["package.json","package-lock.json*","./"]
+COPY ["package.json","entrypoint.sh","./"]
+# COPY ["package.json","package-lock.json*","entrypoint.sh","./"]
 
-RUN npm install 
+RUN npm install --only=production
 
 COPY . .
 
